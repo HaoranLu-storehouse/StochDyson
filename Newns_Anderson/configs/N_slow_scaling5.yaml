@@ -1,0 +1,38 @@
+model:
+  nmetal: 800
+  nbasis: 192
+  coupling_mode: wide_band_gamma
+  metal_grid: midpoint
+  parameters:
+    benchmark_name: modified_slow_Newns_Anderson
+    mass_au: 2000.0
+    omega_au: 0.0002
+    x0_bohr: 20.6097
+    epsilon0_au: -0.0038
+    band_min_au: -0.1
+    band_max_au: 0.1
+    gamma_au: 0.0004
+hybrid:
+  tmax_fs: 5.0
+  block_fs: 0.1
+  output_fs: 1.0
+  active_L: 16
+  propagation_mode: strict_dyson_poisson
+  groups: 1
+  replicas_per_group: 1
+  first_order_samples: 0
+  first_order_samples_per_residual: 1.0
+  first_order_channel_mode: sampled_channels
+  time_quadrature_order: 2
+  high_order_samples: 4
+  high_order_mu: 0.7
+  high_order_channel_mode: conditional_star
+  probability_mode: detuning
+  probability_uniform_mix: 0.05
+  probability_broadening_ev: 0.15
+  seed: 20260811
+  cheb_tol: 1.0e-10
+poisson_diagnostics:
+  lambda_scale: 8.0
+  mu_min: 0.01
+  mu_max: 0.8

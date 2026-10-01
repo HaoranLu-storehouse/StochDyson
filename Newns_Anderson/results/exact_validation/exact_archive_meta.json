@@ -1,0 +1,13 @@
+{
+  "N": 800,
+  "K": 192,
+  "tmax_fs": 200.0,
+  "output_fs": 1.0,
+  "elapsed_s": 9.22573901099986,
+  "shape": [
+    201,
+    801,
+    192
+  ],
+  "state_file": "../results/slow_exact_archive/exact_states.npy"
+}
