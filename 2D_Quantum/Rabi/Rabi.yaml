@@ -1,0 +1,48 @@
+grid:
+  xmin: -40.0
+  xmax: 40.0
+  nx: 800
+  mass: 1.0
+initial_state:
+  state_index: 0
+  x0: 6.0
+  p0: 0.0
+  sigma: 0.7071067811865475
+simulation:
+  tmax: 20.0
+  seed: 12345
+  compute_exact: true
+  exact_dt: 0.005
+model:
+  kind: external_1d_two_state
+  path: ./poisson_paper_rabi_model_pes.csv
+  format: csv
+  interpolation: linear
+  columns:
+    x: x
+    V11: V11
+    V22: V22
+    V12: V12
+algorithm:
+  mu_target: 0.01
+  dt_min: 0.005
+  dt_max: 0.01
+  scale: 0.25
+  floor: 0.0
+  clip_min: 0.0001
+  clip_max: 10.0
+  gap_refine: true
+  gap_threshold: 4.0
+  eta_threshold: 0.5
+  refine_factor: 0.5
+  ntraj_hi: 400
+  ess_threshold: 0.5
+  resampling_enabled: false
+analysis:
+  x_divider: 0.0
+  variance_batches: 8
+  paper_variance_replicas: 0
+  paper_variance_ntraj_hi: 0
+output:
+  directory: ./PES_0.428133
+  prefix: poisson_paper_rabi_model

@@ -1,0 +1,58 @@
+grid:
+  xmin: -15.0
+  xmax: 15.0
+  nx: 801
+  mass: 2000.0
+
+initial_state:
+  state_index: 0
+  x0: -8.0
+  p0: 18.0
+  sigma: 0.5
+
+simulation:
+  tmax: 1500.0
+  seed: 12345
+  run_poisson: true
+  compute_exact: true
+  exact_dt: 0.05
+
+model:
+  kind: external_1d_multistate
+  path: ../examples/four_state_ladder.csv
+  format: csv
+  interpolation: linear
+  nstates: 4
+  columns:
+    x: x
+    diagonal: [V11, V22, V33, V44]
+    couplings:
+      - [0, 1, V12]
+      - [1, 2, V23]
+      - [2, 3, V34]
+
+algorithm:
+  mu_target: 0.3
+  dt_min: 0.02
+  dt_max: 1.0
+  scale: 12.0
+  floor: 0.0
+  clip_min: 1.0e-4
+  clip_max: 5.0e-2
+  gap_refine: true
+  gap_threshold: 0.02
+  eta_threshold: 0.25
+  refine_factor: 0.5
+  ntraj_hi: 512
+  ess_threshold: 0.5
+  resampling_enabled: false
+
+analysis:
+  x_divider: 0.0
+  variance_batches: 8
+  paper_variance_replicas: 0
+  paper_variance_ntraj_hi: 0
+
+output:
+  directory: ./outputs_four_state_ladder
+  prefix: four_state_ladder

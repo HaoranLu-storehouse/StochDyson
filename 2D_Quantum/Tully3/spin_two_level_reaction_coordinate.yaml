@@ -1,0 +1,50 @@
+grid:
+  xmin: -14.0
+  xmax: 14.0
+  nx: 240
+  mass: 2000.0
+
+initial_state:
+  state_index: 0
+  x0: -10.0
+  p0: 20.0
+  sigma: 0.704
+
+simulation:
+  tmax: 2000.0
+  seed: 41
+  run_poisson: true
+  compute_exact: true
+  exact_dt: 0.5
+
+model:
+  kind: tully3
+  A: 0.0006
+  B: 0.10
+  C: 0.90
+
+algorithm:
+  mu_target: 0.3
+  dt_min: 0.5
+  dt_max: 8.0
+  scale: 6.0
+  floor: 0.0
+  clip_min: 1.0e-5
+  clip_max: 2.0e-1
+  gap_refine: true
+  eta_threshold: 0.20
+  refine_factor: 0.5
+  ntraj_hi: 400
+  ess_threshold: 0.60
+  resampling_enabled: true
+  base_edges: []
+
+analysis:
+  variance_batches: 0
+  paper_variance_replicas: 0
+  paper_variance_ntraj_hi: 0
+  wavefunction_error_tracking: true
+
+output:
+  directory: ./outputs_tully3
+  prefix: tully3

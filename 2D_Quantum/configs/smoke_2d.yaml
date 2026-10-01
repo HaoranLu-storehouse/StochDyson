@@ -1,0 +1,95 @@
+grid:
+  xmin: -4.0
+  xmax: 4.0
+  nx: 24
+  ymin: -3.0
+  ymax: 3.0
+  ny: 16
+  mx: 1000.0
+  my: 1000.0
+initial_state:
+  state_index: 0
+  x0: -2.0
+  y0: 0.0
+  px0: 4.0
+  py0: 0.0
+  sigma_x: 0.6
+  sigma_y: 0.6
+simulation:
+  tmax: 0.4
+  seed: 123
+  run_poisson: true
+  compute_exact: true
+  exact_dt: 0.1
+model:
+  kind: external_2d_multistate
+  path: ../examples/three_state_2d_smoke.npz
+  format: npz
+  nstates: 3
+  columns:
+    x: x
+    y: y
+    diagonal:
+    - V11
+    - V22
+    - V33
+    couplings:
+    - - 0
+      - 1
+      - V12
+    - - 1
+      - 2
+      - V23
+algorithm:
+  mu_target: 0.1
+  dt_min: 0.05
+  dt_max: 0.1
+  scale: 4.0
+  floor: 0.0
+  clip_min: 0.0001
+  clip_max: 0.05
+  gap_refine: true
+  gap_threshold: 0.02
+  eta_threshold: 0.25
+  refine_factor: 0.5
+  ntraj_hi: 8
+  ess_threshold: 0.5
+  resampling_enabled: false
+  base_edges:
+  - - 0
+    - 1
+channels:
+  x_divider: 0.0
+  radial_regions:
+  - name: fc
+    center:
+    - -2.0
+    - 0.0
+    r_min: 0.0
+    r_max: 1.0
+cap:
+  enabled: true
+  mode: separable_poly
+  x:
+    x_min_on: -3.5
+    x_max_on: 3.5
+    eta: 0.01
+    power: 2
+  y:
+    y_min_on: -2.5
+    y_max_on: 2.5
+    eta: 0.01
+    power: 2
+analysis:
+  variance_batches: 2
+  paper_variance_replicas: 0
+  paper_variance_ntraj_hi: 0
+output:
+  directory: ./outputs_smoke_2d
+  prefix: smoke_2d
+  export_preview_csv: true
+  preview_mode: cuts
+  preview_y_values:
+  - 0.0
+  preview_x_values:
+  - 0.0

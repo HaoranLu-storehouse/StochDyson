@@ -1,0 +1,69 @@
+# Solver-compatible 1D two-level reaction-coordinate benchmark
+# Literature connection:
+# - The benchmark literature treats the spin-boson model as a two-state system
+#   bilinearly coupled to harmonic bath DOFs, with the system initially in the
+#   higher-energy state and the bath at equilibrium.
+# - The current grid-based Poisson solver does not propagate a full many-mode Debye bath,
+#   so this YAML uses a 1D reaction-coordinate realization that preserves the
+#   two-level displaced-harmonic / constant-coupling structure.
+
+grid:
+  xmin: -10.0
+  xmax: 10.0
+  nx: 200
+  mass: 2000.0
+
+initial_state:
+  # Start in the higher-energy diabatic state near its own minimum
+  state_index: 0
+  x0: 0.0
+  p0: 0.0
+  sigma: 0.71
+
+simulation:
+  tmax: 50
+  seed: 12345
+  run_poisson: true
+  compute_exact: true
+  exact_dt: 0.05
+
+model:
+  kind: external_1d_two_state
+  path: ./spin_two_level_reaction_coordinate.csv
+  format: csv
+  interpolation: linear
+  columns:
+    x: x
+    diagonal: [V11, V22]
+    couplings:
+      - [0, 1, V12]
+
+algorithm:
+  # For a constant-coupling two-level benchmark, it is numerically better to
+  # include the single coupling edge in the base propagator and turn off the
+  # residual high-order sampling.
+  mu_target: 0.3
+  dt_min: 0.01
+  dt_max: 0.05
+  scale: 6.0
+  floor: 0.0
+  clip_min: 1.0e-6
+  clip_max: 4.0e-1
+  ntraj_hi: 0
+  gap_refine: false
+  eta_threshold: 0.20
+  refine_factor: 0.5
+  ess_threshold: 0.6
+  resampling_enabled: false
+  
+
+analysis:
+  variance_batches: 0
+  paper_variance_replicas: 0
+  paper_variance_ntraj_hi: 0
+  x_divider: 0.0
+  wavefunction_error_tracking: true
+
+output:
+  directory: ./outputs_spin_two_level
+  prefix: spin_two_level
